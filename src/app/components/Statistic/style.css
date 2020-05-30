@@ -1,0 +1,75 @@
+#container > i {
+  position: fixed;
+  top: 7px;
+  right: 0;
+  z-index: 99;
+  font-size: 2.5em;
+  cursor: pointer;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+.sun {
+  color: #ffff07;
+}
+
+.moon {
+  color: #c3c329;
+}
+
+#container .title { 
+  display: flex;
+  justify-content: center;
+  margin: 1em 0;
+  font-size: 2em;
+  font-weight: bolder;
+  /* color: #181f24; */
+  color: white;
+  transition: color 500ms ease-in-out;
+}
+
+#container .title.light {
+  color: white;
+}
+
+#container .grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 1em;
+}
+
+#container .grid > div {
+  margin: 0;
+}
+
+#container .header {
+  text-transform: capitalize;
+  margin-bottom: 10px;
+}
+
+#container .confirmed {
+  border-bottom: 10px solid lightblue;
+}
+
+#container .recovered {
+  border-bottom: 10px solid rgb(53, 255, 3);
+}
+
+#container .deaths {
+  border-bottom: 10px solid red;
+}
+
+/* * to desktop */
+@media (min-width: 768px) {
+  #container .title, #container > i {
+    font-size: 2.5em;
+  }
+
+  #container .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

@@ -1,0 +1,52 @@
+.stats {
+  width: 100%;
+  height: auto;
+  position: absolute;
+  display: block;
+  top: 0;
+  transform: translateY(-100%);
+  transition: transform 500ms ease-in-out;
+  background: var(--midnight-black);
+  z-index: 9;
+  padding: 2em 0;
+}
+
+.stats.show {
+  transform: translateY(0%);
+}
+
+.settings {
+  position: absolute;
+  z-index: 9;
+  display: block;
+  margin: 2em 1em;
+  cursor: pointer;
+  transition: opacity 500ms ease-in-out;
+}
+
+.stats > .settings {
+  top: 0;
+}
+
+.settings.hide {
+  opacity: 0;
+}
+
+.settings > i {
+  color: white;
+  font-size: 2.5em;
+  transition: color 300ms ease;
+  text-shadow: 1px 3px 3px black;
+}
+
+.settings > i:hover { 
+  color: wheat;
+}
+
+@media (min-width: 768px) { 
+  .stats {
+    width: 500px;
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+}
