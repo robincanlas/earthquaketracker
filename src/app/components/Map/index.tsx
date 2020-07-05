@@ -109,7 +109,7 @@ export const Map: React.FC<Map.Props> = (props: Map.Props) => {
 				});
 
 				map.addLayer({
-					'id': 'outline',
+					'id': 'Outline',
 					'type': 'circle',
 					'source': 'points',
 					'paint': {
@@ -125,10 +125,10 @@ export const Map: React.FC<Map.Props> = (props: Map.Props) => {
 
 				// // Animate the circle
 				// setInterval(() => {
-				// 	map.setPaintProperty('outline', 'circle-radius', radius);
+				// 	map.setPaintProperty('Outline', 'circle-radius', radius);
 				// 	radius = ++radius % 50;
 				// 	if (radius === 50) {
-				// 		map.setPaintProperty('outline', 'circle-opacity', 0);
+				// 		map.setPaintProperty('Outline', 'circle-opacity', 0);
 				// 	}
 				// }, 100);
 
@@ -147,14 +147,21 @@ export const Map: React.FC<Map.Props> = (props: Map.Props) => {
 				// Mouse move event
 				map.on('mousemove', 'earthquake-layer', e => {
 					if (e.features && e.features[0].properties && e.features[0].geometry.type === 'Point') {
-						var features = map.queryRenderedFeatures(e.point);
-						console.log(features);
 						// Get the id from the properties
 						const id = e.features[0].id as number;
 						// Only if the id are different we process the tooltip
 						if (id !== lastId) {
 							lastId = id;
-
+							// map.setPaintProperty(
+							// 	'Outline', 
+							// 	'circle-radius', 
+							// 	['match', ['get', id.toString()], id.toString(), 100, 0]
+							// );
+							// map.setPaintProperty(
+							// 	'Outline', 
+							// 	'circle-opacity', 
+							// 	['match', ['get', id.toString()], id.toString(), 1, 0]
+							// );
 							// Change the pointer type on move move
 							map.getCanvas().style.cursor = 'pointer';
 
