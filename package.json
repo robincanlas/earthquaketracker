@@ -1,6 +1,6 @@
 {
-  "name": "covid19tracker",
-  "homepage": "https://kristofferrobincanlas.github.io/covid19tracker",
+  "name": "earthquaketracker",
+  "homepage": "https://kristofferrobincanlas.github.io/earthquaketracker",
   "version": "1.0.0",
   "description": "Covid 19 Global tracker",
   "main": "index.js",
