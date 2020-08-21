@@ -1,14 +1,14 @@
 import * as React from 'react';
 import * as style from './style.css';
-// import { Models } from 'app/models';
 import mapboxgl, { LngLatLike } from 'mapbox-gl';
 import axios from 'axios';
 import { Icon } from 'semantic-ui-react';
+import { endPoint, mapboxToken, mapboxStyle, mapboxLayer } from 'app/constants';
 
 // Mapbox css - needed to make tooltips work later in this article
 // import 'mapbox-gl/dist/mapbox-gl.css';
 
-mapboxgl.accessToken = 'pk.eyJ1IjoicnVrYmluMDExIiwiYSI6ImNrYWdrbDI3bTA5NzgyeHBuaWkzbWIxeDQifQ.C7KY2elb_bs0qrST3HvSSQ';
+mapboxgl.accessToken = mapboxToken;
 
 export namespace Map {
 	export interface Props {
@@ -33,7 +33,7 @@ export const Map: React.FC<Map.Props> = (props: Map.Props) => {
 	};
 
 	React.useEffect(() => {
-		fetchData('http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson');
+		fetchData(endPoint.url);
 	}, []);
 	
 	const constructMap = () => {
@@ -42,7 +42,7 @@ export const Map: React.FC<Map.Props> = (props: Map.Props) => {
 			const map = new mapboxgl.Map({
 				container: mapboxElRef.current!,
 				// style: 'mapbox://styles/rukbin011/ckagtrcc110de1ipt2pzqqn5v',
-				style: 'mapbox://styles/rukbin011/ckc8or1203fi81irsp4poh1hv',
+				style: mapboxStyle,
 				center: [121.76572,  13.01153], // initial geo location for Philippines
 				zoom: 4 // initial zoom
 			});
@@ -66,68 +66,28 @@ export const Map: React.FC<Map.Props> = (props: Map.Props) => {
 				
 				// let radius = 1;
 
-				map.addLayer({
-					'id': 'earthquake-layer',
-					'type': 'circle',
-					'source': 'points',
-					'paint': {
-						'circle-opacity': 0.5,
-						'circle-stroke-width': 0.5,
-						'circle-color': [
-							'interpolate',
-							['linear'],
-							['get', 'mag'],
-							// https://colorbrewer2.org/#type=sequential&scheme=YlOrRd&n=9 color palette
-							1, '#ffffcc',
-							2, '#ffeda0',
-							3, '#fed976',
-							4, '#feb24c',
-							5, '#fd8d3c',
-							6, '#fc4e2a',
-							7, '#e31a1c',
-							8, '#bd0026',
-							9, '#b10026',
-							10, '#b10026',
-						],
-						'circle-radius': [
-							'interpolate',
-							['linear'],
-							['get', 'mag'],
-							0, 2,
-							1, 4,
-							2, 8,
-							3, 12,
-							4, 16,
-							5, 20,
-							6, 30,
-							7, 45,
-							8, 65,
-							9, 75,
-							10, 100
-						]
-					}
-				});
+				map.addLayer(mapboxLayer);
 
-				map.addLayer({
-					'id': 'Outline',
-					'type': 'circle',
-					'source': 'points',
-					'paint': {
-						'circle-opacity': 0,
-						'circle-color': 'transparent',
-						'circle-stroke-width': 0.5,
-						'circle-radius': 0,
-						'circle-radius-transition': {
-							'duration': 0
-						}
-					}
-				});
+				// map.addLayer({
+				// 	'id': 'Outline',
+				// 	'type': 'circle',
+				// 	'source': 'points',
+				// 	'paint': {
+				// 		'circle-opacity': 0,
+				// 		'circle-color': 'transparent',
+				// 		'circle-stroke-width': 0.2,
+				// 		'circle-radius': 0,
+				// 		'circle-radius-transition': {
+				// 			'duration': 0
+				// 		}
+				// 	}
+				// });
 
-				// // Animate the circle
+				// Animate the circle
 				// setInterval(() => {
 				// 	map.setPaintProperty('Outline', 'circle-radius', radius);
 				// 	radius = ++radius % 50;
-				// 	if (radius === 50) {
+				// 	if (radius >= 50) {
 				// 		map.setPaintProperty('Outline', 'circle-opacity', 0);
 				// 	}
 				// }, 100);

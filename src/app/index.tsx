@@ -49,9 +49,6 @@ export const App: React.FC = () => {
 				<span className={style.settings} onClick={() => setSidebar(false)}>
 					<Icon name='angle double up' />
 				</span>
-				{/* <Statistic />
-				<Countries />
-				<Chart /> */}
 			</div>
 		</React.Fragment>
 	);
