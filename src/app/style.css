@@ -40,7 +40,21 @@
 }
 
 .settings > i:hover { 
-  color: wheat;
+  color: #fbbd08;
+}
+
+.title {
+  position: absolute;
+  color: #fbbd08;
+  font-size: 2em;
+  top: 1em;
+}
+
+.footnote {
+  position: absolute;
+  color: #fbbd08;
+  font-size: 1em;
+  bottom: 0;
 }
 
 @media (min-width: 768px) { 
@@ -71,7 +85,7 @@
 .sk-cube-grid .sk-cube {
   width: 33%;
   height: 33%;
-  background-color: wheat;
+  background-color: #fbbd08;
   float: left;
   -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
           animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out; 

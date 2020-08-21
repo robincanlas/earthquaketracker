@@ -4,7 +4,7 @@ import { Map } from 'app/components';
 
 export const App: React.FC = () => {
 	const [isLoading, setIsLoading] = React.useState(true);
-	
+
 	const mapIsLoaded = () => {
 		setIsLoading(false);
 	};
@@ -12,6 +12,7 @@ export const App: React.FC = () => {
 	return (
 		<React.Fragment>
 			{isLoading && <span className={style.loading}>
+				<div className={style.title}>Monthly Earthquake tracker</div>	
 				<div className={style['sk-cube-grid']}>
 					<div className={`${style['sk-cube']} ${style['sk-cube1']}`}></div>
 					<div className={`${style['sk-cube']} ${style['sk-cube2']}`}></div>
@@ -22,7 +23,10 @@ export const App: React.FC = () => {
 					<div className={`${style['sk-cube']} ${style['sk-cube7']}`}></div>
 					<div className={`${style['sk-cube']} ${style['sk-cube8']}`}></div>
 					<div className={`${style['sk-cube']} ${style['sk-cube9']}`}></div>
-				</div>	
+				</div>
+				<div className={style.footnote}>
+					<p>© {new Date().getFullYear()}, Coded by Kristoffer Robin Canlas</p>
+				</div>
 			</span>}
 			<Map mapIsLoaded={mapIsLoaded} />
 		</React.Fragment>
