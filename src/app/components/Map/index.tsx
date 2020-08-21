@@ -3,7 +3,7 @@ import * as style from './style.css';
 import mapboxgl, { LngLatLike } from 'mapbox-gl';
 import axios from 'axios';
 import { endPoint, mapboxToken, mapboxStyle, mapboxLayer, getMagnitudes } from 'app/constants';
-import { Dropdown, DropdownProps } from 'semantic-ui-react';
+import { Dropdown, DropdownProps, Icon } from 'semantic-ui-react';
 
 // Mapbox css - needed to make tooltips work later in this article
 // import 'mapbox-gl/dist/mapbox-gl.css';
@@ -19,7 +19,7 @@ export namespace Map {
 export const Map: React.FC<Map.Props> = (props: Map.Props) => {
 	// let map: mapboxgl.Map;
 	const mapboxElRef = React.useRef(null); // DOM element to render map
-	// const [mapState, setMap] = React.useState<mapboxgl.Map | null>(null);
+	const [mapState, setMap] = React.useState<mapboxgl.Map | null>(null);
 	const [data, setData] = React.useState<any>([]);
 
 	const fetchData = (url: string) => {
@@ -73,7 +73,7 @@ export const Map: React.FC<Map.Props> = (props: Map.Props) => {
 					closeOnClick: false
 				});
 
-				// setMap(map as any);
+				setMap(map as any);
 				props.mapIsLoaded();
 
 				// Variable to hold the active country/province on hover
@@ -136,15 +136,40 @@ export const Map: React.FC<Map.Props> = (props: Map.Props) => {
 		}
 	};
 
-	// // Initialize our map
+	const [dropdownValue, setDropdownValue] = React.useState<string>('');
+
+	// Initialize our map
 	React.useEffect(() => {
 		if (data.length > 0) {
 			constructMap();
 		}
 	}, [data]);
 
+	const buildRange = (start: number): (number | string)[] => {
+		const range: (number | string)[] = ['in', 'mag'];
+		for (let i = 0; i < 10; i++) {
+			const value: string = `${start}.${i}`;
+			range.push(+value);
+		}
+		return range;
+	};
+
 	const handleDropdownChange = (event: React.SyntheticEvent<HTMLElement, Event>, dropdownData: DropdownProps) => {
-		console.log(dropdownData.value);
+		const magnitude: number | null = dropdownData.value ? +dropdownData.value : null;
+		setDropdownValue(dropdownData.value as string);
+		if (mapState && magnitude) {
+			// mapState.setFilter('earthquake-layer', ['>=', ['get', 'mag'], magnitude]);
+			// filter in magnitude with range from .0 to .9;
+			mapState.setFilter('earthquake-layer', buildRange(magnitude));
+		}
+	};
+
+	const resetFilter = () => {
+		// reset filter
+		if (mapState) {
+			setDropdownValue('');
+			mapState.setFilter('earthquake-layer', null);
+		}
 	};
 
 	return (
@@ -157,8 +182,12 @@ export const Map: React.FC<Map.Props> = (props: Map.Props) => {
 					search
 					selection
 					options={getMagnitudes()}
+					value={dropdownValue}
 				/>
 			</div>
+			{dropdownValue !== '' && <div onClick={resetFilter} className={style.repeat}>
+				<Icon size='big' name='repeat' />
+			</div>}
 			<div id={style.map}>
 				<div className={style.mapContainer}>
 					{/* Assigned Mapbox container */}

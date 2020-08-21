@@ -54,7 +54,7 @@ export const mapboxLayer: mapboxgl.Layer = {
 export const getMagnitudes = (): DropdownItemProps[] => {
 	const magnitudes: DropdownItemProps[] = [];
 	for (let index = 1; index <= 10; index++) {
-		const magnitude = { key: index.toString(), value: index.toString(), text: `Magnitude ${index.toString()}` };
+		const magnitude = { key: index.toString(), value: index.toString(), text: `Magnitude ${index.toString()}+` };
 		magnitudes.push(magnitude);
 	}
 	return magnitudes;
