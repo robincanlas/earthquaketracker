@@ -48,7 +48,7 @@ export const mapboxLayer: mapboxgl.Layer = {
 			10, 100
 		]
 	}
-}
+};
 
 export enum Statistics {
 	CONFIRMED = 'confirmed',
