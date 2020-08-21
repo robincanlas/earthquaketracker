@@ -1,4 +1,5 @@
 import { Models } from 'app/models';
+import { DropdownItemProps } from 'semantic-ui-react';
 
 export const assetsPath: string =  '../../assets';
 export interface Icon { [key: string]: JSX.Element; }
@@ -48,6 +49,15 @@ export const mapboxLayer: mapboxgl.Layer = {
 			10, 100
 		]
 	}
+};
+
+export const getMagnitudes = (): DropdownItemProps[] => {
+	const magnitudes: DropdownItemProps[] = [];
+	for (let index = 1; index <= 10; index++) {
+		const magnitude = { key: index.toString(), value: index.toString(), text: `Magnitude ${index.toString()}` };
+		magnitudes.push(magnitude);
+	}
+	return magnitudes;
 };
 
 export enum Statistics {

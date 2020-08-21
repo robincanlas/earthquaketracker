@@ -2,8 +2,8 @@ import * as React from 'react';
 import * as style from './style.css';
 import mapboxgl, { LngLatLike } from 'mapbox-gl';
 import axios from 'axios';
-import { Icon } from 'semantic-ui-react';
-import { endPoint, mapboxToken, mapboxStyle, mapboxLayer } from 'app/constants';
+import { endPoint, mapboxToken, mapboxStyle, mapboxLayer, getMagnitudes } from 'app/constants';
+import { Dropdown, DropdownProps } from 'semantic-ui-react';
 
 // Mapbox css - needed to make tooltips work later in this article
 // import 'mapbox-gl/dist/mapbox-gl.css';
@@ -63,34 +63,9 @@ export const Map: React.FC<Map.Props> = (props: Map.Props) => {
 						features: data as any // change later
 					}
 				});
-				
-				// let radius = 1;
 
+				// Add the circle layers
 				map.addLayer(mapboxLayer);
-
-				// map.addLayer({
-				// 	'id': 'Outline',
-				// 	'type': 'circle',
-				// 	'source': 'points',
-				// 	'paint': {
-				// 		'circle-opacity': 0,
-				// 		'circle-color': 'transparent',
-				// 		'circle-stroke-width': 0.2,
-				// 		'circle-radius': 0,
-				// 		'circle-radius-transition': {
-				// 			'duration': 0
-				// 		}
-				// 	}
-				// });
-
-				// Animate the circle
-				// setInterval(() => {
-				// 	map.setPaintProperty('Outline', 'circle-radius', radius);
-				// 	radius = ++radius % 50;
-				// 	if (radius >= 50) {
-				// 		map.setPaintProperty('Outline', 'circle-opacity', 0);
-				// 	}
-				// }, 100);
 
 				// Create a mapbox popup
 				const popup = new mapboxgl.Popup({
@@ -168,15 +143,22 @@ export const Map: React.FC<Map.Props> = (props: Map.Props) => {
 		}
 	}, [data]);
 
-	const resetFilter = () => {
-		// 
+	const handleDropdownChange = (event: React.SyntheticEvent<HTMLElement, Event>, dropdownData: DropdownProps) => {
+		console.log(dropdownData.value);
 	};
 
 	return (
 		<>
-			{false && <div onClick={resetFilter} className={style.repeat}>
-				<Icon size='big' name='repeat' />
-			</div>}
+			<div className={style.dropdown}>
+				<Dropdown
+					onChange={handleDropdownChange}
+					placeholder='Select Magnitude'
+					fluid
+					search
+					selection
+					options={getMagnitudes()}
+				/>
+			</div>
 			<div id={style.map}>
 				<div className={style.mapContainer}>
 					{/* Assigned Mapbox container */}

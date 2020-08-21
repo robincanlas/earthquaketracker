@@ -74,3 +74,9 @@
   cursor: pointer;
   padding-right: .5em;
 }
+
+.dropdown {
+  position: absolute;
+    z-index: 1;
+    margin: 1em;
+}
