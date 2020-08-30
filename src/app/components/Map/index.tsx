@@ -17,7 +17,6 @@ export namespace Map {
 }
 
 export const Map: React.FC<Map.Props> = (props: Map.Props) => {
-	// let map: mapboxgl.Map;
 	const mapboxElRef = React.useRef(null); // DOM element to render map
 	const [mapState, setMap] = React.useState<mapboxgl.Map | null>(null);
 	const [data, setData] = React.useState<any>([]);
