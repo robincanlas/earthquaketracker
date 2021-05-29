@@ -2,7 +2,7 @@
   "name": "earthquaketracker",
   "homepage": "https://kristofferrobincanlas.github.io/earthquaketracker",
   "version": "1.0.0",
-  "description": "Covid 19 Global tracker",
+  "description": "Earthquake Global tracker",
   "main": "index.js",
   "scripts": {
     "build": "rimraf -rm build && webpack --mode=production",
