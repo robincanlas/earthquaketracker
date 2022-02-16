@@ -20,7 +20,7 @@ export const App: React.FC = () => {
 				</div>
 				<div className={style.spinner} />
 				<div className={style.footnote}>
-					<p>© {new Date().getFullYear()}, Coded by Kristoffer Robin Canlas</p>
+					<p>© 2020, Coded by Kristoffer Robin Canlas</p>
 				</div>
 			</span>}
 			<Map mapIsLoaded={mapIsLoaded} />
