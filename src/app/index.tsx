@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as style from './style.css';
 import { Map } from 'app/components';
 import { Image } from 'semantic-ui-react';
+import logo from 'app/usgs_logo.png';
 
 export const App: React.FC = () => {
 	const [isLoading, setIsLoading] = React.useState(true);
@@ -15,7 +16,7 @@ export const App: React.FC = () => {
 			{isLoading && <span className={style.loading}>
 				<div className={style.title}>Monthly Earthquake tracker</div>	
 				<div className={style['usgs-logo']}>
-					<Image src='https://www.usgs.gov/sites/all/themes/usgs_palladium/logo.png' />
+					<Image src={logo} />
 				</div>
 				<div className={style.spinner} />
 				<div className={style.footnote}>
