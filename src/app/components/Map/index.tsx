@@ -236,7 +236,7 @@ export const Map: React.FC<Map.Props> = (props: Map.Props) => {
 
   const submit = () => {
     if (startDate && endDate) {
-      let url: string = `https://robincanlas-server-typescript.onrender.com/earthquake/byRange/${startDate}/${endDate}`;
+      let url: string = `${endPoint.byRangeWith}${startDate}/${endDate}`;
       url = limit ? url.concat(`/${limit}`) : url;
       fetchData(url);
     }
