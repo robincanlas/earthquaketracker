@@ -3,8 +3,9 @@ import * as style from './style.css';
 import mapboxgl, { LngLatLike } from 'mapbox-gl';
 import axios from 'axios';
 import { endPoint, mapboxToken, mapboxStyle, mapboxLayer, getMagnitudes } from 'app/constants';
-import { Button, Dropdown, DropdownProps, Icon, Modal } from 'semantic-ui-react';
+import { Button, Dropdown, DropdownProps, Icon, Input, Modal } from 'semantic-ui-react';
 import DatePicker from "react-datepicker";
+import { getDate } from 'app/utils';
 
 // Mapbox css - needed to make tooltips work later in this article
 // import 'mapbox-gl/dist/mapbox-gl.css';
@@ -33,13 +34,15 @@ export namespace Map {
 const mapReducer: React.Reducer<Map.ModalState, Map.IssuesAction> = (state, action) => {
   switch (action.type) {
     case 'close':
-      return { open: false }
+      return { ...state, open: false }
     case 'open':
-      return { open: true }
+      return { ...state, open: true }
     case 'setStartDate':
-      return { startDate: action.payload?.startDate }
-      case 'setEndDate':
-        return { endDate: action.payload?.endDate }
+      return { ...state, startDate: action.payload?.startDate }
+    case 'setEndDate':
+      return { ...state, endDate: action.payload?.endDate }
+    case 'setLimit':
+      return { ...state, limit: action.payload?.limit }
     default:
       throw new Error('Unsupported action...')
   }
@@ -54,12 +57,12 @@ export const Map: React.FC<Map.Props> = (props: Map.Props) => {
 
   const [state, dispatch] = React.useReducer(mapReducer, {
     open: false,
-    startDate: '',
-    endDate: '',
+    startDate: getDate(new Date()),
+    endDate: getDate(new Date()),
     limit: null
   });
 
-  const { open, startDate, endDate } = state;
+  const { open, startDate, endDate, limit } = state;
 
 	const fetchData = (url: string) => {
 		axios.get(url)
@@ -223,14 +226,6 @@ export const Map: React.FC<Map.Props> = (props: Map.Props) => {
 		}
 	};
 
-  const getDate = (date: Date): string => {
-    const month = date.getUTCMonth() + 1; //months from 1-12
-    const day = date.getUTCDate();
-    const year = date.getUTCFullYear();
-
-    return year + "-" + month + "-" + day;
-  };
-
   React.useEffect(() => {
     if (dpStartDate) {
       dispatch({ type: 'setStartDate', payload: {
@@ -240,7 +235,12 @@ export const Map: React.FC<Map.Props> = (props: Map.Props) => {
   }, [dpStartDate, dpEndDate]);
 
   const submit = () => {
-    fetchData(`https://robincanlas-server-typescript.onrender.com/earthquake/byRange/2023-06-01/2023-06-02/10`);
+    if (startDate && endDate) {
+      let url: string = `https://robincanlas-server-typescript.onrender.com/earthquake/byRange/${startDate}/${endDate}`;
+      url = limit ? url.concat(`/${limit}`) : url;
+      fetchData(url);
+    }
+
     dispatch({ type: 'close' });
   };
 
@@ -255,6 +255,14 @@ export const Map: React.FC<Map.Props> = (props: Map.Props) => {
         <Modal.Content>
           Start Date
           <DatePicker selected={dpStartDate} onChange={(date: any) => setDpStartDate(date)} />
+          End Date
+          <DatePicker selected={dpEndDate} onChange={(date: any) => setDpEndDate(date)} />
+          Limit
+          <div>
+            <Input value={limit || ''} size='small' type='number' min={0} max={1000} placeholder='0-1000' onChange={(e) => {
+              dispatch({ type: 'setLimit', payload: { limit: e.currentTarget.value} });
+            }} />
+          </div>
         </Modal.Content>
         <Modal.Actions>
           <Button negative onClick={() => dispatch({ type: 'close' })}>
