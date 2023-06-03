@@ -4,6 +4,7 @@ import { App } from './app';
 
 import 'normalize.css';
 import './default.css';
+import "react-datepicker/dist/react-datepicker.css";
 
 ReactDOM.render(
 	<App />,

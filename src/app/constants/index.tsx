@@ -6,6 +6,9 @@ export interface Icon { [key: string]: JSX.Element; }
 
 export const endPoint: Models.EndPoint = {
 	url: 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson',
+	significantByWeek: 'https://robincanlas-server-typescript.onrender.com/earthquake/all/significant/significantByWeek',
+	significantByMonth: 'https://robincanlas-server-typescript.onrender.com/earthquake/all/significant/significantByMonth',
+	byRangeWith: 'https://robincanlas-server-typescript.onrender.com/earthquake/byRange/{startDate}/{endDate}/{limit}',
 };
 export const mapboxToken: string = 'pk.eyJ1IjoicnVrYmluMDExIiwiYSI6ImNrYWdrbDI3bTA5NzgyeHBuaWkzbWIxeDQifQ.C7KY2elb_bs0qrST3HvSSQ';
 export const mapboxStyle: string = 'mapbox://styles/rukbin011/ckc8or1203fi81irsp4poh1hv';

@@ -80,3 +80,12 @@
     z-index: 1;
     margin: 1em;
 }
+
+.search {
+  position: absolute !important;
+  z-index: 1;
+  margin: 1em;
+  left: 12em;
+  top: 1em;
+  cursor: pointer;
+}

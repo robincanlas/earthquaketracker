@@ -17,5 +17,8 @@ export namespace Models {
 
 	export interface EndPoint {
 		url: string;
+    significantByWeek: string;
+    significantByMonth: string;
+    byRangeWith: string;
 	}
 }
